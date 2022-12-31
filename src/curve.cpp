@@ -53,14 +53,14 @@ void BezierCurve::forceUpdateSegments() {
 
 void BezierCurve::onEvent(SDL_Event* e) {
   bool anyPointClicked = false;
-  Vec2 mouse_pos;
+  Vec2 mouse_pos(0, 0);
   for (std::vector<BezierPoint>::iterator it = m_bez_points.begin(); it != m_bez_points.end(); ++it) {
     it->onEvent(e);
     anyPointClicked |= it->isSelected(); // TODO: Find a better way to check if a click was *not* on one of the points
   }
   // If the mouse click didn't select and existing point, create a new point
   if (!anyPointClicked) {
-    if (e->type == SDL_MOUSEBUTTONDOWN) {
+    if (e->type == SDL_MOUSEBUTTONDOWN && e->button.button == SDL_BUTTON_LEFT) {
       SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
       addPoint(mouse_pos);
     }

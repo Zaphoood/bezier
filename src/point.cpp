@@ -110,31 +110,35 @@ void BezierPoint::onEvent(SDL_Event* e) {
   SDL_Rect node_rect, left_arm_rect, right_arm_rect;
   switch (e->type) {
     case SDL_MOUSEBUTTONDOWN:
-      if (e->button.clicks == 1) {
-        SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
-        node_rect = getNodeRect();
-        left_arm_rect = getLeftArmRect();
-        right_arm_rect = getRightArmRect();
-        if (SDL_PointInRect(&mouse_pos, &node_rect)) {
+      SDL_GetMouseState(&mouse_pos.x, &mouse_pos.y);
+      node_rect = getNodeRect();
+      left_arm_rect = getLeftArmRect();
+      right_arm_rect = getRightArmRect();
+      if (SDL_PointInRect(&mouse_pos, &node_rect)) {
+        if (e->button.button == SDL_BUTTON_LEFT) {
           selNode = true;
+        } else if (e->button.button == SDL_BUTTON_RIGHT) {
+          switch (m_pointType) {
+            case PointType::Cusp:
+              m_pointType = PointType::Straight;
+              break;
+            case PointType::Straight:
+              m_pointType = PointType::Symmetric;
+              break;
+            case PointType::Symmetric:
+              m_pointType = PointType::Cusp;
+              break;
+          }
         }
-        else if (SDL_PointInRect(&mouse_pos, &left_arm_rect)) {
+      }
+      else if (SDL_PointInRect(&mouse_pos, &left_arm_rect)) {
+        if (e->button.button == SDL_BUTTON_LEFT) {
           selL = true;
         }
-        else if (SDL_PointInRect(&mouse_pos, &right_arm_rect)) {
+      }
+      else if (SDL_PointInRect(&mouse_pos, &right_arm_rect)) {
+        if (e->button.button == SDL_BUTTON_LEFT) {
           selR = true;
-        }
-      } else if (e->button.clicks == 3) { // FIXME
-        switch (m_pointType) {
-          case PointType::Cusp:
-            m_pointType = PointType::Straight;
-            break;
-          case PointType::Straight:
-            m_pointType = PointType::Symmetric;
-            break;
-          case PointType::Symmetric:
-            m_pointType = PointType::Cusp;
-            break;
         }
       }
       break;
@@ -157,6 +161,7 @@ void BezierPoint::draw(SDL_Renderer* renderer) {
   SDL_Rect left_arm_rect = getLeftArmRect();
   SDL_Rect right_arm_rect = getRightArmRect();
 
+  // TODO: Change shape depenging on point type
   // Fill green if selected
   if (selNode) {
     SDL_SetRenderDrawColor(renderer, 104, 163, 87, SDL_ALPHA_OPAQUE);   
