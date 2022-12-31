@@ -2,11 +2,11 @@
 #include <iostream>
 #include <vector>
 #include "SDL.h"
-#include "bez_point.h"
+#include "point.h"
 #include "vector2.h"
 #include "visuals.h"
 
-class BezierSegment : public VisualObject {
+class Segment : public VisualObject {
 private:
 	BezierPoint* m_p0;
 	BezierPoint* m_p1;
@@ -19,6 +19,6 @@ private:
 	std::vector<Vec2> renderCurve(int steps);
 public:
 	void updateCurve();
-	BezierSegment(BezierPoint* p0, BezierPoint* p1);
+	Segment(BezierPoint* p0, BezierPoint* p1);
 	void draw(SDL_Renderer* renderer) override;
 };

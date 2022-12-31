@@ -8,9 +8,9 @@ project(Multibezier)
 
 add_executable(multibez
     src/main.cpp
-    src/bez.cpp
-    src/bez_point.cpp
-    src/bez_segment.cpp
+    src/curve.cpp
+    src/segment.cpp
+    src/point.cpp
     src/event.cpp
     src/main.cpp
     src/vector2.cpp

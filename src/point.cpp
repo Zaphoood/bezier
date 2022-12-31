@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-#include "bez_point.h"
+#include "point.h"
 #include "vector2.h"
 
 BezierPoint::BezierPoint(Vec2 position, Vec2 arm_l, Vec2 arm_r, PointType pointType)
