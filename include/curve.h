@@ -14,7 +14,7 @@ private:
 	std::vector<Segment> m_segments; // Segments between each point
 	int m_selPoint = -1; // Which points is currently selected
 	int pointSize = 8;
-	void renderCurves();
+	void updateCurves();
 	void drawPoints(SDL_Renderer* renderer);
 	void drawSegments(SDL_Renderer* renderer);
 public:
