@@ -1,8 +1,11 @@
 #pragma once
+
 #include <iostream>
 #include <vector>
-#include "visuals.h"
+
 #include "SDL.h"
+
+#include "visuals.h"
 #include "event.h"
 #include "vector2.h"
 #include "point.h"
@@ -12,8 +15,6 @@ class BezierCurve : public VisualObject, public EventListener {
 private:
 	std::vector<BezierPoint> m_bez_points; // The defining points
 	std::vector<Segment> m_segments; // Segments between each point
-	int m_selPoint = -1; // Which points is currently selected
-	int pointSize = 8;
 	void updateCurves();
 	void drawPoints(SDL_Renderer* renderer);
 	void drawSegments(SDL_Renderer* renderer);

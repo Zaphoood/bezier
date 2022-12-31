@@ -1,6 +1,7 @@
 #include "segment.h"
 
 const int MAX_STEP_DISTANCE = 8;
+const SDL_Color SEGMENT_LINE = {151, 64, 53, SDL_ALPHA_OPAQUE};
 
 Segment::Segment(BezierPoint* p0, BezierPoint* p1) 
 : m_p0(p0), m_p1(p1) {
@@ -9,7 +10,7 @@ Segment::Segment(BezierPoint* p0, BezierPoint* p1)
 
 void Segment::draw(SDL_Renderer* renderer) {
 	// Draw curve
-	SDL_SetRenderDrawColor(renderer, 151, 64, 53, SDL_ALPHA_OPAQUE);
+	SDL_SetRenderDrawColor(renderer, SEGMENT_LINE.r, SEGMENT_LINE.g, SEGMENT_LINE.b, SEGMENT_LINE.a);
 	for (std::vector<Vec2>::iterator it = m_curve.begin(); it != std::prev(m_curve.end()); ++it) {
 		SDL_RenderDrawLine(renderer, it->x, it->y, std::next(it)->x, std::next(it)->y);
 	}

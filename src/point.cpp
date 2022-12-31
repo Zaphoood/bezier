@@ -3,13 +3,19 @@
 #include "point.h"
 #include "vector2.h"
 
+const int DEFAULT_ARM_DISTANCE = 30;
+const SDL_Color POINT_LINE = {0, 0, 0, SDL_ALPHA_OPAQUE};
+const SDL_Color POINT_FILL = {104, 163, 87, SDL_ALPHA_OPAQUE};
+const int POINT_SIZE = 8;
+const int ARM_POINT_SIZE = 6;
+
 BezierPoint::BezierPoint(Vec2 position, Vec2 arm_l, Vec2 arm_r, PointType pointType)
   : m_position(position), m_leftArm(arm_l), m_rightArm(arm_r), m_pointType(pointType) {}
 
 BezierPoint::BezierPoint(Vec2 position, PointType pointType)
   : m_position(position), m_pointType(pointType) {
-    m_leftArm  = m_position - Vec2f(30, 0);
-    m_rightArm = m_position + Vec2f(30, 0);
+    m_leftArm  = m_position - Vec2f(DEFAULT_ARM_DISTANCE, 0);
+    m_rightArm = m_position + Vec2f(DEFAULT_ARM_DISTANCE, 0);
   }
 
 BezierPoint::BezierPoint(Vec2 position) : BezierPoint::BezierPoint(position, PointType::Straight) {}
@@ -77,15 +83,15 @@ Vec2f BezierPoint::getRightArmRelative() { return m_rightArm - m_position; }
 bool BezierPoint::isSelected() { return selNode || selL || selR; }
 
 SDL_Rect BezierPoint::getNodeRect() {
-  return SDL_Rect{ (int) m_position.x - pointSize / 2, (int) m_position.y - pointSize / 2, pointSize, pointSize };
+  return SDL_Rect{ (int) m_position.x - POINT_SIZE / 2, (int) m_position.y - POINT_SIZE / 2, POINT_SIZE, POINT_SIZE };
 }
 
 SDL_Rect BezierPoint::getLeftArmRect() {
-  return SDL_Rect{ (int) (m_leftArm.x - (float) armPointSize / 2), (int) (m_leftArm.y - (float) armPointSize / 2), armPointSize, armPointSize };
+  return SDL_Rect{ (int) (m_leftArm.x - (float) ARM_POINT_SIZE / 2), (int) (m_leftArm.y - (float) ARM_POINT_SIZE / 2), ARM_POINT_SIZE, ARM_POINT_SIZE };
 }
 
 SDL_Rect BezierPoint::getRightArmRect() {
-  return SDL_Rect{ (int)(m_rightArm.x - (float) armPointSize / 2), (int)(m_rightArm.y - (float) armPointSize / 2), armPointSize, armPointSize };
+  return SDL_Rect{ (int)(m_rightArm.x - (float) ARM_POINT_SIZE / 2), (int)(m_rightArm.y - (float) ARM_POINT_SIZE / 2), ARM_POINT_SIZE, ARM_POINT_SIZE };
 }
 
 void BezierPoint::update() {
@@ -151,9 +157,9 @@ void BezierPoint::onEvent(SDL_Event* e) {
 }
 
 bool BezierPoint::hasChanged() {
-  bool c = changed;
+  bool tmp = changed;
   changed = false;
-  return c;
+  return tmp;
 }
 
 void BezierPoint::draw(SDL_Renderer* renderer) {
@@ -162,14 +168,14 @@ void BezierPoint::draw(SDL_Renderer* renderer) {
   SDL_Rect right_arm_rect = getRightArmRect();
 
   // TODO: Change shape depenging on point type
-  // Fill green if selected
+  // Fill if selected
   if (selNode) {
-    SDL_SetRenderDrawColor(renderer, 104, 163, 87, SDL_ALPHA_OPAQUE);   
+    SDL_SetRenderDrawColor(renderer, POINT_FILL.r, POINT_FILL.g, POINT_FILL.b, POINT_FILL.a);
     SDL_RenderFillRect(renderer, &node_rect);
   }
   
   // Outline
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+  SDL_SetRenderDrawColor(renderer, POINT_LINE.r, POINT_LINE.g, POINT_LINE.b, POINT_LINE.a);
   SDL_RenderDrawRect(renderer, &node_rect);
 
   // Left and right handles

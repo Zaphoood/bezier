@@ -3,8 +3,6 @@
 #include "visuals.h"
 #include "event.h"
 
-const int MAX_FPS = 60;
-
 class Window {
 public:
 	Window();
@@ -25,7 +23,7 @@ public:
 
 private:
 	bool isRunning = false;
-	int minFrametime = 1000 / MAX_FPS;
+	int min_frametime;
 	SDL_Window* window = nullptr;
 	SDL_Renderer* renderer = nullptr;
 

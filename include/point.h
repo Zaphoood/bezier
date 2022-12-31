@@ -22,8 +22,6 @@ class BezierPoint : public VisualObject, public EventListener {
     bool selL = false; // Equals true if the right arm was selected by the cursor
     bool selR = false; // See above
     bool changed = false; // Set to true when the position changes, set to false when hasChanged() is called
-    int pointSize = 8;
-    int armPointSize = 6;
 
   public:
     BezierPoint(Vec2 position, Vec2 arm_l, Vec2 arm_r, PointType pointType);

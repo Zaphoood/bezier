@@ -1,9 +1,14 @@
 #include <iostream>
 #include "window.h"
 
+const int MAX_FPS = 60;
+const SDL_Color BACKGROUND = {255, 255, 255, SDL_ALPHA_OPAQUE};
+
 Window::Window(const std::vector<VisualObject *>& v_objects,
     const std::vector<EventListener*>& event_ls)
-	: m_v_objects(v_objects), m_event_ls(event_ls) { }
+	: m_v_objects(v_objects), m_event_ls(event_ls) {
+    min_frametime = 1000 / MAX_FPS;
+  }
 
 Window::Window() {
   Window(std::vector<VisualObject *>(), std::vector<EventListener*>());
@@ -22,7 +27,7 @@ void Window::init(const char* title, int x, int y, int w, int h, bool fullscreen
 		}
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer) {
-			SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
+			SDL_SetRenderDrawColor(renderer, BACKGROUND.r, BACKGROUND.g, BACKGROUND.b, BACKGROUND.a);
 		}
 
 		std::cout << "Init successful\n";
@@ -86,14 +91,14 @@ void Window::update() {
 
 	// Limit FPS
 	int frametime = SDL_GetTicks() - t_start;
-	if (frametime < minFrametime) {
-		SDL_Delay(minFrametime - frametime);
+	if (frametime < min_frametime) {
+		SDL_Delay(min_frametime - frametime);
 	}
 }
 
 void Window::render() {
 	// Clear screen
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(renderer, BACKGROUND.r, BACKGROUND.g, BACKGROUND.b, BACKGROUND.a);
 	SDL_RenderClear(renderer);
 	
 	// Draw instances of VisualObject in m_v_objects onto the screen

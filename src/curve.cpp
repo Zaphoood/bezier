@@ -73,7 +73,6 @@ void BezierCurve::draw(SDL_Renderer* renderer) {
 }
 
 void BezierCurve::drawPoints(SDL_Renderer* renderer) {
-  SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
   for (auto &point : m_bez_points) {
     point.draw(renderer);
   }
