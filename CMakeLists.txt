@@ -11,8 +11,8 @@ add_executable(multibez
     src/curve.cpp
     src/segment.cpp
     src/point.cpp
-    src/main.cpp
     src/vector2.cpp
+    src/visuals.cpp
     src/window.cpp
 )
 

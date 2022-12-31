@@ -2,6 +2,7 @@
 
 #include "point.h"
 #include "vector2.h"
+#include "visuals.h"
 
 const int DEFAULT_ARM_DISTANCE = 30;
 const SDL_Color POINT_LINE = {0, 0, 0, SDL_ALPHA_OPAQUE};
@@ -167,18 +168,35 @@ void BezierPoint::draw(SDL_Renderer* renderer) {
   SDL_Rect left_arm_rect = getLeftArmRect();
   SDL_Rect right_arm_rect = getRightArmRect();
 
-  // TODO: Change shape depenging on point type
-  // Fill if selected
-  if (selNode) {
-    SDL_SetRenderDrawColor(renderer, POINT_FILL.r, POINT_FILL.g, POINT_FILL.b, POINT_FILL.a);
-    SDL_RenderFillRect(renderer, &node_rect);
+  switch (m_pointType) {
+    case PointType::Symmetric:
+      // Fill green if selected
+      if (selNode) {
+        SDL_SetRenderDrawColor(renderer, POINT_FILL.r, POINT_FILL.g, POINT_FILL.b, POINT_FILL.a);   
+        SDL_RenderFillRect(renderer, &node_rect);
+      }
+      
+      // Outline
+      SDL_SetRenderDrawColor(renderer, POINT_LINE.r, POINT_LINE.g, POINT_LINE.b, POINT_LINE.a);
+      SDL_RenderDrawRect(renderer, &node_rect);
+      break;
+    case PointType::Straight:
+      gfx::drawCircle(renderer, m_position.x, m_position.y, POINT_SIZE / 2);
+      break;
+    case PointType::Cusp:
+      float halfPointSize = (float) POINT_SIZE / 2;
+      SDL_Point points[3] = {
+        SDL_Point{(int) (m_position.x - halfPointSize), (int) (m_position.y + halfPointSize)},
+        SDL_Point{(int) (m_position.x + halfPointSize), (int) (m_position.y + halfPointSize)},
+        SDL_Point{(int) (m_position.x),                 (int) (m_position.y - halfPointSize)},
+      };
+      SDL_RenderDrawLines(renderer, points, 3);
+      SDL_RenderDrawLine(renderer, points[2].x, points[2].y, points[0].x, points[0].y);
+      break;
   }
-  
-  // Outline
-  SDL_SetRenderDrawColor(renderer, POINT_LINE.r, POINT_LINE.g, POINT_LINE.b, POINT_LINE.a);
-  SDL_RenderDrawRect(renderer, &node_rect);
 
   // Left and right handles
+  SDL_SetRenderDrawColor(renderer, POINT_LINE.r, POINT_LINE.g, POINT_LINE.b, POINT_LINE.a);
   SDL_RenderFillRect(renderer, &left_arm_rect);
   SDL_RenderFillRect(renderer, &right_arm_rect);
 
