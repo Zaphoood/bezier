@@ -3,10 +3,12 @@
 #include "visuals.h"
 #include "event.h"
 
+const int MAX_FPS = 60;
+
 class Window {
 public:
+	Window();
 	Window(const std::vector<VisualObject *>& v_objects, const std::vector<EventListener*>& event_ls);
-	~Window();
 
 	void init(const char* title, int x, int y, int w, int h, bool fullscreen);
 	void addVisualObject(VisualObject* v_object);
@@ -23,10 +25,9 @@ public:
 
 private:
 	bool isRunning = false;
-	int maxFps = 60;
-	int minFrametime = 1000 / maxFps;
-	SDL_Window* window;
-	SDL_Renderer* renderer;
+	int minFrametime = 1000 / MAX_FPS;
+	SDL_Window* window = nullptr;
+	SDL_Renderer* renderer = nullptr;
 
 	// Objects in this vector will be drawn on screen every frame
 	std::vector<VisualObject *> m_v_objects;

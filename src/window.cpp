@@ -1,17 +1,15 @@
 #include <iostream>
 #include "window.h"
 
-Window::Window(const std::vector<VisualObject *>& v_objects, const std::vector<EventListener*>& event_ls)
-	: m_v_objects(v_objects), m_event_ls(event_ls) {
-	window = nullptr;
-	renderer = nullptr;
-}
+Window::Window(const std::vector<VisualObject *>& v_objects,
+    const std::vector<EventListener*>& event_ls)
+	: m_v_objects(v_objects), m_event_ls(event_ls) { }
 
-Window::~Window() {
+Window::Window() {
+  Window(std::vector<VisualObject *>(), std::vector<EventListener*>());
 }
 
 void Window::init(const char* title, int x, int y, int w, int h, bool fullscreen) {
-
 	int flags = 0;
 	if (fullscreen) {
 		flags = SDL_WINDOW_FULLSCREEN;
@@ -27,7 +25,7 @@ void Window::init(const char* title, int x, int y, int w, int h, bool fullscreen
 			SDL_SetRenderDrawColor(renderer, 255, 255, 255, SDL_ALPHA_OPAQUE);
 		}
 
-		std::cout << "Init successfull\n";
+		std::cout << "Init successful\n";
 		isRunning = true;
 	}
 	else {
@@ -40,7 +38,8 @@ void Window::init(const char* title, int x, int y, int w, int h, bool fullscreen
 void Window::addVisualObject(VisualObject* v_object) {
 	m_v_objects.push_back(v_object);
 }
-void Window::removeVisualObject(VisualObject* v_object) { // TODO: Needs testing
+void Window::removeVisualObject(VisualObject* v_object) {
+  // TODO: Use filter instead
 	for (std::vector<VisualObject*>::iterator it = m_v_objects.begin(); it != m_v_objects.end(); it++) {
 		if (*it == v_object) {
 			m_v_objects.erase(it);
@@ -52,7 +51,9 @@ void Window::removeVisualObject(VisualObject* v_object) { // TODO: Needs testing
 void Window::addEventListener(EventListener* event_l) {
 	m_event_ls.push_back(event_l);
 }
-void Window::removeEventListener(EventListener* event_l) { // TODO: Needs testing
+
+void Window::removeEventListener(EventListener* event_l) {
+  // TODO: Use filter instead
 	for (std::vector<EventListener*>::iterator it = m_event_ls.begin(); it != m_event_ls.end(); it++) {
 		if (*it == event_l) {
 			m_event_ls.erase(it);
@@ -91,7 +92,7 @@ void Window::update() {
 }
 
 void Window::render() {
-	// Clear the screen (Fill with white color)
+	// Clear screen
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 	SDL_RenderClear(renderer);
 	
@@ -113,3 +114,4 @@ void Window::clean() {
 bool Window::running() {
 	return isRunning;
 }
+
