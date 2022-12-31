@@ -11,7 +11,7 @@ Window::Window(const std::vector<VisualObject *>& v_objects,
   }
 
 Window::Window() {
-  Window(std::vector<VisualObject *>(), std::vector<EventListener*>());
+  min_frametime = 1000 / MAX_FPS;
 }
 
 void Window::init(const char* title, int x, int y, int w, int h, bool fullscreen) {
@@ -82,7 +82,8 @@ void Window::handleEvents() {
 }
 
 void Window::update() {
-	unsigned int t_start = SDL_GetTicks();
+	unsigned int frame_start = SDL_GetTicks64();
+	unsigned long frame_end = frame_start + min_frametime;
 
 	// Update all EventListener instances
 	for (std::vector<EventListener*>::iterator it = m_event_ls.begin(); it != m_event_ls.end(); ++it) {
@@ -90,10 +91,7 @@ void Window::update() {
 	}
 
 	// Limit FPS
-	int frametime = SDL_GetTicks() - t_start;
-	if (frametime < min_frametime) {
-		SDL_Delay(min_frametime - frametime);
-	}
+	while (SDL_GetTicks64() < frame_end);
 }
 
 void Window::render() {
