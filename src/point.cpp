@@ -6,8 +6,8 @@
 const int DEFAULT_ARM_DISTANCE = 30;
 const SDL_Color POINT_LINE = {0, 0, 0, SDL_ALPHA_OPAQUE};
 const SDL_Color POINT_FILL = {104, 163, 87, SDL_ALPHA_OPAQUE};
-const int POINT_SIZE = 8;
-const int ARM_POINT_SIZE = 6;
+const int POINT_SIZE = 12;
+const int ARM_POINT_SIZE = 8;
 
 BezierPoint::BezierPoint(Vec2 position, Vec2 arm_l, Vec2 arm_r, PointType pointType)
   : m_position(position), m_leftArm(arm_l), m_rightArm(arm_r), m_pointType(pointType) {}
