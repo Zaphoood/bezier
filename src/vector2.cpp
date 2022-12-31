@@ -3,30 +3,52 @@
 
 // Vec2
 
-Vec2::Vec2() : x(0), y(0) {}
 Vec2::Vec2(int x_, int y_) : x(x_), y(y_) {}
-Vec2::Vec2(const Vec2& other) { x = other.x; y = other.y; }
-Vec2::Vec2(const Vec2f& other) { x = (int) other.x; y = (int) other.y; }
 
-Vec2 Vec2::add(const Vec2& other) const { return Vec2(x + other.x, y + other.y); }
-Vec2 Vec2::sub(const Vec2& other) const { return Vec2(x - other.x, y - other.y); }
-Vec2 Vec2::mul(int a) const { return Vec2(x * a, y * a); }
-Vec2 Vec2::mul(double a) const { return Vec2((int) (x * a), (int) (y * a)); }
-Vec2 Vec2::div(int a) const { return Vec2(x / a, y / a); }
-Vec2 Vec2::div(double a) const { return Vec2((int) (x / a), (int) (y / a)); }
-double Vec2::size() const { return sqrt(x * x + y * y); }
+Vec2::Vec2(const Vec2& other) {
+  x = other.x;
+  y = other.y;
+}
 
-Vec2 Vec2::operator+(const Vec2& other) const { return add(other); }
-Vec2 Vec2::operator-(const Vec2& other) const { return sub(other); }
-Vec2 Vec2::operator-() const { return Vec2(-x, -y); }
-Vec2 Vec2::operator*(int a) const { return mul(a); }
-Vec2 Vec2::operator*(double a) const { return mul(a); }
-Vec2 Vec2::operator/(int a) const { return div(a); }
-Vec2 Vec2::operator/(double a) const { return div(a); }
-void Vec2::operator+=(const Vec2& other) { *this = *this + other; }
-void Vec2::operator-=(const Vec2& other) { *this = *this - other; }
+Vec2::Vec2(const Vec2f& other) {
+  x = (int) other.x;
+  y = (int) other.y;
+}
 
-// Vec2f
+Vec2 Vec2::operator+(const Vec2& other) const {
+  return Vec2(x + other.x, y + other.y);
+}
+
+Vec2 Vec2::operator-(const Vec2& other) const {
+  return Vec2(x - other.x, y - other.y);
+}
+
+Vec2 Vec2::operator-() const {
+  return Vec2(-x, -y);
+}
+
+Vec2 Vec2::operator*(double a) const {
+  return Vec2((int) (x * a), (int) (y * a));
+}
+
+Vec2 Vec2::operator/(double a) const {
+ return Vec2((int) (x / a), (int) (y / a));
+}
+
+void Vec2::operator+=(const Vec2& other) {
+  x += other.x;
+  y += other.y;
+}
+
+void Vec2::operator-=(const Vec2& other) {
+  x -= other.x;
+  y -= other.y;
+}
+
+double Vec2::size() const {
+  return sqrt(x * x + y * y);
+}
+
 
 Vec2f::Vec2f() : x(0.0f), y(0.0f) {}
 Vec2f::Vec2f(float x_, float y_) : x(x_), y(y_) {}

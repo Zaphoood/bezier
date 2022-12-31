@@ -3,27 +3,18 @@
 struct Vec2f;
 
 struct Vec2 {
-	Vec2();
+	int x, y;
+
 	Vec2(int x, int y);
 	Vec2(const Vec2& other);
 	Vec2(const Vec2f& other);
 
-	int x, y;
-
-	Vec2 add(const Vec2& other) const;
-	Vec2 sub(const Vec2& other) const;
-	Vec2 mul(int a) const;
-	Vec2 mul(double a) const;
-	Vec2 div(int a) const;
-	Vec2 div(double a) const;
 	double size() const;
 
 	Vec2 operator+(const Vec2& other) const;
 	Vec2 operator-(const Vec2& other) const;
 	Vec2 operator-() const;
-	Vec2 operator*(int a) const;
 	Vec2 operator*(double a) const;
-	Vec2 operator/(int a) const;
 	Vec2 operator/(double a) const;
 	void operator+=(const Vec2& other);
 	void operator-=(const Vec2& other);
