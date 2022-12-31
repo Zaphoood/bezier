@@ -6,22 +6,22 @@
 #include "curve.h"
 
 int main(int argc, char* argv[]) {
-  std::unique_ptr<Window> window(new Window());
-	window->init("Extendable Bezier Curve", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 400, false);
+  Window window;
+	window.init("Extendable Bezier Curve", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 400, false);
 
 	BezierCurve bez = BezierCurve();
 	bez.addPoint(Vec2(110, 10));
 	bez.addPoint(Vec2(300, 80));
 
-	window->addVisualObject(&bez);
-	window->addEventListener(&bez);
+	window.addVisualObject(&bez);
+	window.addEventListener(&bez);
 	
-	while (window->running()) {
-		window->handleEvents();
-		window->update();
-		window->render();
+	while (window.running()) {
+		window.handleEvents();
+		window.update();
+		window.render();
 	}
-	window->clean();
+	window.clean();
 
 	return 0;
 }
