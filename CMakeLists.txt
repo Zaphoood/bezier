@@ -3,10 +3,9 @@ cmake_minimum_required(VERSION 3.16)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# set the project name
-project(Multibezier)
+project(Bezier)
 
-add_executable(multibez
+add_executable(bezier
     src/main.cpp
     src/curve.cpp
     src/segment.cpp
@@ -16,8 +15,8 @@ add_executable(multibez
     src/window.cpp
 )
 
-target_link_libraries(multibez PUBLIC SDL2 SDL2_ttf)
-target_include_directories(multibez PRIVATE
+target_link_libraries(bezier PUBLIC SDL2 SDL2_ttf)
+target_include_directories(bezier PRIVATE
     include
     /usr/local/include/SDL3
     /usr/include/SDL2
