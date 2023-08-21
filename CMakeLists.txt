@@ -18,6 +18,6 @@ add_executable(bezier
 target_link_libraries(bezier PUBLIC SDL2 SDL2_ttf)
 target_include_directories(bezier PRIVATE
     include
-    /usr/local/include/SDL3
+    /usr/local/include/SDL2
     /usr/include/SDL2
 )
