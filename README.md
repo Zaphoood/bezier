@@ -1,6 +1,6 @@
 # Bezier curves
 
-Draw bezier curves using nodes.
+Draw bezier curves between nodes.
 
 ## Setup
 
