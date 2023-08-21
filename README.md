@@ -23,5 +23,5 @@ make
 
 After compiling, run `./build/bezier` to start the application.
 
-You can move nodes as well as their arms by clicking and dragging.
+You can move nodes (as well as their arms) by clicking and dragging.
 To add a new node, use hold control while clicking.
